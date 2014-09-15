@@ -6,8 +6,12 @@
     $scope.title = 'Bookmark Page';
     $scope.categories = [];
     $scope.bookmarks = [];
-    $scope.filter = 'test';
+    $scope.filter = '';
     $scope.sort = 'name';
+
+    $scope.setFilter = function(category){
+      $scope.filter = category;
+    };
 
     Category.all().then(function(response){
       $scope.categories = response.data.categories;
