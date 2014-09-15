@@ -2,13 +2,46 @@ h3 {{title}}
 
 .row
   .col-xs-3
-    form(role='form', novalidate, name='categoryForm')
-      .form-group
-        label(for='name') Name
-        input.form-control#name(required, ng-model='name', type='text', name='name', autofocus)
-      button.btn.btn-primary(type='submit', ng-show='categoryForm.$valid', ng-click='addCategory()') Add Category
-  .col-xs-9
+    h4 Add Category
+    .backdrop
+      form(role='form', novalidate, name='categoryForm')
+        .form-group
+          label(for='name') Name
+          input.form-control#name(required, ng-model='name', type='text', name='name', autofocus)
+        button.btn.btn-primary(type='submit', ng-show='categoryForm.$valid', ng-click='addCategory()') Add Category
+  .col-xs-1
+  .col-xs-2
+    h4 Categories
+    .backdrop
+      h5(ng-repeat='cat in categories | orderBy:sort'): a(ng-click='filter = cat.name', href='') {{cat.name}}
+  .col-xs-1
+  .col-xs-5
+    h4 Bookmarks
+    .backdrop
+      table.table.table-bordered
+        thead
+          tr
+            th Name
+            th Category
+            th Date
+        tbody
+          tr(ng-repeat='b in bookmarks | filter:filter')
+            td: a(href="{{b.url}}") {{b.name}}
+            td {{b.category}}
+            td {{b.created | date: 'MMM dd, yyyy'}}
 .row
   .col-xs-3
-    h4 Categories
-    h5(ng-repeat='cat in categories') {{cat.name}}
+    h4 Add Bookmark
+    .backdrop
+      form(role='form', novalidate, name='bookmarkForm')
+        .form-group
+          label(for='name') Name
+          input.form-control#name(required, ng-model='bookmark.name', type='text', name='name')
+        .form-group
+          label(for='url') URL
+          input.form-control#url(required, ng-model='bookmark.url', type='url', name='url')
+        .form-group
+          label(for='category') Category
+          select.form-control#category(required, ng-model='bookmark.category', ng-options='c._id as c.name for c in categories | orderBy:"name"', name='category')
+            option(value='') Select Category
+        button.btn.btn-primary(type='submit', ng-show='bookmarkForm.$valid', ng-click='addBookmark()') Add Bookmark

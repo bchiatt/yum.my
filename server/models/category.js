@@ -21,4 +21,9 @@ Category.all = function(id, cb){
   Category.collection.find({userId:_id}).toArray(cb);
 };
 
+Category.findById = function(id, cb){
+  var _id = Mongo.ObjectID(id);
+  Category.collection.findOne({_id:_id}, cb);
+};
+
 module.exports = Category;
